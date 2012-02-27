@@ -6,15 +6,16 @@
    		 slider_acc.setup('#accordion-container'); } );
    	</script>
    	
-	<div id="accordion_background">
-	<div id="accordion-container-wrapper">
-	<div id="accordion-container">
-		
 		<?php $my_accordion_query = new WP_Query(array(
 			'post_type' => 'accordion',
 			'posts_per_page' => '4')); ?>
-					
-		<?php while ($my_accordion_query->have_posts()) : $my_accordion_query->the_post(); ?>
+		
+		<?php if ($my_accordion_query->have_posts()) : ?>				
+				<div id="accordion_background">
+				<div id="accordion-container-wrapper">
+				<div id="accordion-container">		
+				
+			<?php while ($my_accordion_query->have_posts()) : $my_accordion_query->the_post(); ?>
 
 				<div id="as<?php echo the_ID() ?>" class="slide">
         			<a id="slideimg<?php echo the_ID() ?>" class="image async-img" href="<?php echo get_post_meta($post->ID, 'accordion_destination', true); ?>">
@@ -33,6 +34,7 @@
     </div> <!-- accordion-container -->
 	</div> <!-- accordion-container-wrapper --> 
 	</div> <!-- accordion background -->
+	<?php endif; ?>	    
 	    
 	    <div id="container-mid">
 	    	<div id="homepage">
