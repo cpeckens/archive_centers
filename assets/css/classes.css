@@ -296,7 +296,8 @@ blockquote {
 
 #nav a:hover,
 #nav a:active,
-#nav li.current_page_item a {
+#nav li.current_page_item a,
+#nav li.current-page-ancestor a {
 	color:#333333;
 	background-color: #fcd323;
 	-webkit-border-radius: 5px;
@@ -341,15 +342,77 @@ blockquote {
 	float: left;
 }
 
+/* Dropdown nav */
+
+#nav .submenu {
+	border-radius: 5px;
+}
+#nav .sub-menu,
+#nav .sub-menu a,
+#nav .sub-menu li a {
+	color: #FFFFFF;
+}
+
+#nav .sub-menu li {
+	background: none;
+	width:10em;
+	padding-top:7px;
+	padding-bottom: 7px;
+	border-bottom: solid 1px #666;
+	margin: 0 0 0 7px;
+	border-right: none;
+}
+
+#nav .sub-menu li a {
+	background: none;
+}
+
+#nav .sub-menu li a:hover {
+	background: #fcd323;
+	color:#333;
+}
+#nav .sub-menu { /* second-level lists */
+	background: #333333;
+	position: absolute;
+	margin-top: 10px;
+	font-weight: 400;
+	font-size: 1em;
+	letter-spacing: 0;
+	width:11em;
+	left: -999em; /* using left instead of display to hide menus because display: none isn't read by screen readers */
+	z-index: 100;
+}
+
+#nav .sub-menu li.current_page_item,
+#nav .sub-menu li.current-page-ancestor {
+	background: none;
+}
+
+#nav .sub-menu a {
+	padding-left:5px;
+}
+
+ 
+#nav .sub-menu .sub-menu { /* third-and-above-level lists */
+	margin-top: -20px;
+	margin-left:10em;
+}
+ 
+#nav li:hover ul ul, #nav li.sfhover ul ul {
+	left: -999em;
+}
+ 
+#nav li:hover ul, #nav li li:hover ul, #nav li.sfhover ul, #nav li li.sfhover ul { /* lists nested under hovered list items */
+	left: auto;
+}
+
 
 /* 5.0 Header Content - Logo and Title
 ---------------------------------------------*/
 /* 5.1 Logo and Title
 ---------------------------------------------*/
 #blogtitle {
-	margin-left: 5.4054054054054%; /* 40px / 740px */
-	margin-top: 4.7297297297297%; /* 35px /740px */
-	margin-bottom: 3.3783783783784%; /*25px / 740px */
+	margin-top: 2em; /* 35px /740px */
 	float:left;
 }
 
@@ -377,8 +440,12 @@ ___________________________________________________________*/
 	float:right;
 	position:relative;
 	width: 220px;
-	margin-top: 2.027027027027027%; /* 15px /740px */
+	margin-top: 5px; /* 15px /740px */
 
+}
+
+#searchbar.mobile {
+	display: none;
 }
 #searchbar input {
 	background-color: #686868;
@@ -455,16 +522,47 @@ ___________________________________________________________*/
 	clear: left;
 }
 
-.wysiwyg-read-more-link {
-	font-size: 1em;
-	font-weight: 700;
-	width: 250px;
-	clear: both;
-	margin: 0 0 25px;
-	background: url('../img/expand.png') no-repeat 0px -25px;
-	padding-left: 30px;
-	padding-bottom:6px;
+.readmore {
+	font-size:.5em;
+	color: #333;
 }
 
+.wysiwyg-read-more-link {
+	color:#333;
+	text-transform:uppercase; 
+	}
 
+/* 8.0 Courses and Accordion
+___________________________________________________________*/
+h3.acc_trigger {
+	padding: 4px;	
+	margin: 0 0 10px 0;
+	background: #f0f0f0;
+	border: 1px solid #d6d6d6;
+	-webkit-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border-radius: 5px;
+	font-size: 1.25em;
+}
 
+.acc_container {
+	margin: 0 0 5px; padding: 0;
+	overflow: hidden;
+	clear: both;
+}
+
+.acc_expandall {
+	text-transform: uppercase;
+	font-size:50%;
+}
+
+h3.expand {
+	margin-bottom:3px;	
+
+}
+
+.wysiwyg-more-less-toggle,
+.acc_container {display:none;}

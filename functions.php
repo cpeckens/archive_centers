@@ -1,11 +1,12 @@
 <?php
+/********************Admin/Dashboard Functions**********************/
 //add menu support
 	add_theme_support( 'menus' );
 
 	//register menus
 		function ksascenters_register_my_menus() {
 	  		register_nav_menus(
-	    		array( 'header-menu' => __( 'Header Menu' ), 'mobile-menu' => __( 'Mobile Menu' ))
+	    		array( 'header-menu' => __( 'Header Menu' ))
 	  		);
 		}
 		
@@ -18,6 +19,67 @@
 	// name of the thumbnail, width, height, crop mode
 		add_image_size( 'page-image', 960, 360, true );
 
+//register sidebars
+	if ( function_exists('register_sidebar') )
+		register_sidebar(array(
+			'name'          => 'Department Address',
+			'id'            => 'address-sb',
+			'description'   => '',
+			'before_widget' => '<div id="address-widget" class="widget %2$s">',
+			'after_widget'  => '</div>',
+			'before_title'  => '<h2 class="widgettitle">',
+			'after_title'   => '</h2>'
+			));	
+		
+//Add Theme Options Page
+	if(is_admin()){	
+		require_once('assets/functions/ksascent-theme-settings-basic.php');
+	}
+	
+	//Collect current theme option values
+		function ksascent_get_global_options(){
+			$ksascent_option = array();
+			$ksascent_option 	= get_option('ksascent_options');
+		return $ksascent_option;
+		}
+	
+	//Function to call theme options in theme files 
+		$ksascent_option = ksascent_get_global_options();
+
+/********************WYSIWYG Editor Modification**********************/
+// add stylesheet for WYSIWYG editor
+	function ksascent_add_editor_style() {
+	  add_editor_style( 'style-editor.css' );
+	}
+	
+	add_action( 'after_setup_theme', 'ksascent_add_editor_style' );
+
+//Add style dropdown to WYSIWYG editor
+	function ksascent_mce_buttons_2($buttons)
+	{
+		array_unshift($buttons, 'styleselect');
+		return $buttons;
+	}
+	add_filter('mce_buttons_2', 'ksascent_mce_buttons_2');
+	
+	function ksascent_mce_before_init($init_array)
+	{
+		// add classes using a ; separated values
+		$init_array['theme_advanced_styles'] = "Button=button;Divider=divider;Dark Blue=altcolorblue; Yellow=altyellow";
+		return $init_array;
+	}
+	add_filter('tiny_mce_before_init', 'ksascent_mce_before_init');
+
+// add additional buttons to WYSIWYG editor
+	function ksascent_enable_more_buttons($buttons) {
+	  $buttons[] = 'hr';
+	  $buttons[] = 'sub';
+	  $buttons[] = 'sup'; 
+	  return $buttons;
+	}
+	add_filter("mce_buttons_3", "ksascent_enable_more_buttons");
+
+/********************Functions for Template Files**********************/	
 //pagination function
 	function ksascenters_pagination($prev = '«', $next = '»') {
     	global $wp_query, $wp_rewrite;
@@ -40,18 +102,13 @@
     	echo paginate_links( $pagination );
 	};		
 
-//register sidebars
-	if ( function_exists('register_sidebar') )
-		register_sidebar(array(
-			'name'          => 'Department Address',
-			'id'            => 'address-sb',
-			'description'   => '',
-			'before_widget' => '<div id="address-widget" class="widget %2$s">',
-			'after_widget'  => '</div>',
-			'before_title'  => '<h2 class="widgettitle">',
-			'after_title'   => '</h2>'
-			));	
-
+//Change Excerpt Length
+	function ksascenters_new_excerpt_length($length) {
+		return 100; //Change word count
+	}
+	add_filter('excerpt_length', 'ksascenters_new_excerpt_length');
+	
+/********************Security/Performance Functions**********************/
 // remove junk from head
 	remove_action('wp_head', 'rsd_link');
 	remove_action('wp_head', 'wp_generator');
@@ -63,81 +120,28 @@
 	remove_action('wp_head', 'parent_post_rel_link', 10, 0);
 	remove_action('wp_head', 'adjacent_posts_rel_link', 10, 0);
 
-	// remove version info from head and feeds
-		function complete_version_removal() {
-			return '';
-		}
-		add_filter('the_generator', 'complete_version_removal');
-
-//Change Excerpt Length -- Add to functions.php
-	function ksascenters_new_excerpt_length($length) {
-		return 100; //Change word count
-	}
-	add_filter('excerpt_length', 'ksascenters_new_excerpt_length');
-
-//Add iframe shortcode
-	if ( !function_exists( 'iframe_embed_shortcode' ) ) {
-		function iframe_embed_shortcode($atts, $content = null) {
-			extract(shortcode_atts(array(
-				'width' => '100%',
-				'height' => '480',
-				'src' => '',
-				'frameborder' => '0',
-				'scrolling' => 'no',
-				'marginheight' => '0',
-				'marginwidth' => '0',
-				'allowtransparency' => 'true',
-				'id' => '',
-				'class' => 'iframe-class',
-				'same_height_as' => ''
-			), $atts));
-			$src_cut = substr($src, 0, 35);
-			if(strpos($src_cut, 'maps.google' )){
-				$google_map_fix = '&output=embed';
-			}else{
-				$google_map_fix = '';
-			}
-			$return = '';
-			if( $id != '' ){
-				$id_text = 'id="'.$id.'" ';
-			}else{
-				$id_text = '';
-			}
-			$return .= '<div class="video-container"><iframe '.$id_text.'class="'.$class.'" width="'.$width.'" height="'.$height.'" src="'.$src.$google_map_fix.'" frameborder="'.$frameborder.'" scrolling="'.$scrolling.'" marginheight="'.$marginheight.'" marginwidth="'.$marginwidth.'" allowtransparency="'.$allowtransparency.'" webkitAllowFullScreen allowFullScreen></iframe></div>';
-			// &amp;output=embed
-			return $return;
-		}
-		add_shortcode('iframe', 'iframe_embed_shortcode');
+// remove version info from head and feeds
+    function complete_version_removal() {
+    	return '';
+    }
+    add_filter('the_generator', 'complete_version_removal');
+    
+//remove unneccessary classes for navigation menus
+	add_filter('nav_menu_css_class', 'ksascent_css_attributes_filter', 100, 1);
+	add_filter('nav_menu_item_id', 'ksascent_css_attributes_filter', 100, 1);
+	add_filter('page_css_class', 'ksascent_css_attributes_filter', 100, 1);
+	function ksascent_css_attributes_filter($var) {
+		 $newnavclasses = is_array($var) ? array_intersect($var, array('current-menu-item', 'current_page_item', 'current-page-ancestor', 'current-page-parent')) : '';
+		 return $newnavclasses;
 	}
 
-//Add AJAX file upload capability
-//Save image via AJAX
-add_action('wp_ajax_ksas_ajax_upload', 'ksas_ajax_upload'); //Add support for AJAX save
+//Remove login errors 
+	add_filter('login_errors',create_function('$a', "return null;"));
 
-function ksas_ajax_upload(){
-	
-	global $wpdb; //Now WP database can be accessed
-	
-	
-	$image_id=$_POST['data'];
-	$image_filename=$_FILES[$image_id];	
-	$override['test_form']=false; //see http://wordpress.org/support/topic/269518?replies=6
-	$override['action']='wp_handle_upload';    
-	
-	$uploaded_image = wp_handle_upload($image_filename,$override);
-	
-	if(!empty($uploaded_image['error'])){
-		echo 'Error: ' . $uploaded_image['error'];
-	}	
-	else{ 
-		update_option($image_id, $uploaded_image['url']);		 
-		echo $uploaded_image['url'];
-	}
-			
-	die();
-
-}
-
-include_once (TEMPLATEPATH . '/assets/functions/accordion.php');
-
+/********************Includes to Additional Functions**********************/	
+// include custom widget functionality, posttypes, taxonomies, and metaboxes
+// uncomment the the lines below if using on a single install.  These are now plugins on the network install.
+/*
+	include_once (TEMPLATEPATH . '/assets/functions/ksascent-accordion.php');
+*/
 ?>

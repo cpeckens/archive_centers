@@ -18,15 +18,15 @@
 			<?php while ($my_accordion_query->have_posts()) : $my_accordion_query->the_post(); ?>
 
 				<div id="as<?php echo the_ID() ?>" class="slide">
-        			<a id="slideimg<?php echo the_ID() ?>" class="image async-img" href="<?php echo get_post_meta($post->ID, 'accordion_destination', true); ?>">
-        				<img alt="" src="<?php echo get_post_meta($post->ID, 'accordion_photo', true); ?>">
+        			<a id="slideimg<?php echo the_ID() ?>" class="image async-img" href="<?php echo get_post_meta($post->ID, 'ecpt_accordion_destination', true); ?>">
+        				<img alt="" src="<?php echo get_post_meta($post->ID, 'ecpt_accordion_photo', true); ?>">
         			<div class="text-back"></div>
         				<div class="text">
         					<h3><?php the_title() ?></h3>
         					<?php the_content() ?>
         				</div>
         			</a>
-        			<img alt="" src="<?php echo get_post_meta($post->ID, 'accordion_strip', true); ?>">
+        			<img alt="" src="<?php echo get_post_meta($post->ID, 'ecpt_accordion_strip', true); ?>">
         		</div>
         		
 		<?php endwhile; ?>

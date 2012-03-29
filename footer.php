@@ -21,7 +21,7 @@
 			<div class="clearboth"></div> <!--to have background work properly -->
 		
 		</div> <!--End container-foot -->
-
+		<?php wp_footer(); ?>
 	</body>
 		<script src="<?php bloginfo('template_url'); ?>/assets/js/respond.min.js"></script>
 		<script src="<?php bloginfo('template_url'); ?>/assets/js/ksascenters_custom.js"></script>

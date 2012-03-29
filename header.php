@@ -48,22 +48,31 @@
 					</div><!-- End blogtitle -->
 					
 					<div id="searchbar">
-						<form method="get" id="searchform" action="<?php bloginfo('home'); ?>/">
-							<div><input type="text" size="put_a_size_here" name="s" id="s" value="Search this site" onfocus="if(this.value==this.defaultValue)this.value='';" onblur="if(this.value=='')this.value=this.defaultValue;"/>
-								<input type="submit" id="searchsubmit" value="Search" class="btn" />
-							</div>
-						</form>
-					</div><!-- End searchbar -->
+					<form method="get" id="searchform" action="<?php bloginfo('home'); ?>/">
+<div><label title="search" /><input type="text" size="put_a_size_here" name="s" id="s" value="Search this site" onfocus="if(this.value==this.defaultValue)this.value='';" onblur="if(this.value=='')this.value=this.defaultValue;"/>
+<input type="submit" id="searchsubmit" value="Search" class="btn" />
+</div>
+</form>
+					</div>
+					
+					
 					
 				</div><!-- End header-right -->
+									<div id="searchbar" class="mobile">
+					<form method="get" id="searchform" action="<?php bloginfo('home'); ?>/">
+<div><input type="text" size="put_a_size_here" name="s" id="s" value="Search this site" onfocus="if(this.value==this.defaultValue)this.value='';" onblur="if(this.value=='')this.value=this.defaultValue;"/>
+<input type="submit" id="searchsubmit" value="Search" class="btn" />
+</div>
+</form>
+					</div>
 
+			
 			</div> <!-- End header -->
-			
-			<div id="nav">
-				<?php wp_nav_menu( array( 'theme_location' => 'header-menu' ) ); ?>
-				<div class="clearboth"></div> <!--to have background work properly -->
-			</div> <!--End nav -->
-			
+							<div id="nav">
+					<?php wp_nav_menu( array( 'theme_location' => 'header-menu' ) ); ?>
+					<div class="clearboth"></div> <!--to have background work properly -->
+					</div> <!--End nav -->
+
 		</div> <!-- End container-head-->
 
 		<div id="nav-break"></div>

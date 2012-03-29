@@ -1,17 +1,73 @@
-/*
-* Skeleton V1.1
-* Copyright 2011, Dave Gamache
-* www.getskeleton.com
-* Free to use under the MIT license.
-* http://www.opensource.org/licenses/mit-license.php
-* 8/17/2011
-*/
+//**************************Set jQuery no conflict.  Use $j instead of $ in all scripts*****************************//
 var $j = jQuery.noConflict();
 
-$j(document).ready(function() {
+//**************************Drop Down Menus*****************************//
+//Suckerfish dropdown
 
-	/* Tabs Activiation
-	================================================== */
+ sfHover = function() {
+	var sfEls = document.getElementById("nav").getElementsByTagName("LI");
+	for (var i=0; i<sfEls.length; i++) {
+		sfEls[i].onmouseover=function() {
+			this.className+=" sfhover";
+		}
+		sfEls[i].onmouseout=function() {
+			this.className=this.className.replace(new RegExp(" sfhover\\b"), "");
+		}
+	}
+}
+if (window.attachEvent) window.attachEvent("onload", sfHover);
+
+//**************************Open PDFs in new window*****************************//
+$j(document).ready(function(){
+  $j("a[href$='pdf']").attr('target','_blank');
+});
+
+
+//**************************Accordions (Courses and FAQs)*****************************//
+$j(document).ready(function() {
+	
+	//Set default open/close settings
+$j('.acc_container').hide(); //Hide/close all containers
+/* $j('.acc_trigger:first').addClass('active').next().show(); //Add "active" class to first trigger, then show/open the immediate next container */
+
+//On Click
+$j('.acc_trigger').click(function(){
+	if( $j(this).next().is(':hidden') ) { //If immediate next container is closed...
+		$j('.acc_trigger').removeClass('active').next().slideUp(); //Remove all "active" state and slide up the immediate next container
+		$j(this).toggleClass('active').next().slideDown(); //Add "active" state to clicked trigger and slide down the immediate next container
+	}
+	return false; //Prevent the browser jump to the link anchor
+});
+
+//Expand All and Collapse all functions
+$j(".acc_expandall").toggle(function() {
+					$j(this).text("[Collapse All]").stop();
+					$j(".acc_container").show();
+				}, function() {
+					$j(this).text("[Expand All]").stop();
+					$j(".acc_container").hide();
+				});
+
+});
+
+
+//**************************Read More/Read Less Function*****************************//
+$j(document).ready(function() {
+					$j(".wysiwyg-read-more-link").toggle(function() {
+					$j(this).text("Read Less").stop();
+					$j(this).css({'background-position' : '0px 0px'});
+					$j(this).parents(".wysiwyg-more-less").find(".wysiwyg-more-less-toggle").show();
+				}, function() {
+					$j(this).text("Read More").stop();
+					$j(this).css({'background-position' : '0px -25px'});
+					$j(this).parents(".wysiwyg-more-less").find(".wysiwyg-more-less-toggle").hide();
+				});
+
+});
+
+
+//**************************Tabs*****************************//
+$j(document).ready(function() {
 
 	var tabs = $j('ul.tabs');
 
@@ -39,16 +95,4 @@ $j(document).ready(function() {
 			}
 		});
 	});
-});
-$j(document).ready(function() {
-					$j(".wysiwyg-read-more-link").toggle(function() {
-					$j(this).text("Read Less").stop();
-					$j(this).css({'background-position' : '0px 0px'});
-					$j(this).parents(".wysiwyg-more-less").find(".wysiwyg-more-less-toggle").show();
-				}, function() {
-					$j(this).text("Read More").stop();
-					$j(this).css({'background-position' : '0px -25px'});
-					$j(this).parents(".wysiwyg-more-less").find(".wysiwyg-more-less-toggle").hide();
-				});
-
 });
