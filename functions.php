@@ -108,36 +108,6 @@
 	}
 	add_filter('excerpt_length', 'ksascenters_new_excerpt_length');
 	
-/********************Security/Performance Functions**********************/
-// remove junk from head
-	remove_action('wp_head', 'rsd_link');
-	remove_action('wp_head', 'wp_generator');
-	remove_action('wp_head', 'feed_links', 2);
-	remove_action('wp_head', 'index_rel_link');
-	remove_action('wp_head', 'wlwmanifest_link');
-	remove_action('wp_head', 'feed_links_extra', 3);
-	remove_action('wp_head', 'start_post_rel_link', 10, 0);
-	remove_action('wp_head', 'parent_post_rel_link', 10, 0);
-	remove_action('wp_head', 'adjacent_posts_rel_link', 10, 0);
-
-// remove version info from head and feeds
-    function complete_version_removal() {
-    	return '';
-    }
-    add_filter('the_generator', 'complete_version_removal');
-    
-//remove unneccessary classes for navigation menus
-	add_filter('nav_menu_css_class', 'ksascent_css_attributes_filter', 100, 1);
-	add_filter('nav_menu_item_id', 'ksascent_css_attributes_filter', 100, 1);
-	add_filter('page_css_class', 'ksascent_css_attributes_filter', 100, 1);
-	function ksascent_css_attributes_filter($var) {
-		 $newnavclasses = is_array($var) ? array_intersect($var, array('current-menu-item', 'current_page_item', 'current-page-ancestor', 'current-page-parent')) : '';
-		 return $newnavclasses;
-	}
-
-//Remove login errors 
-	add_filter('login_errors',create_function('$a', "return null;"));
-
 /********************Includes to Additional Functions**********************/	
 // include custom widget functionality, posttypes, taxonomies, and metaboxes
 // uncomment the the lines below if using on a single install.  These are now plugins on the network install.

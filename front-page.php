@@ -1,14 +1,12 @@
 <?php get_header() ?>	
-	
-	<script type="text/javascript"> //Setup accordion
-		var $j = jQuery.noConflict();
-		$j(document).ready(function() {
-   		 slider_acc.setup('#accordion-container'); } );
-   	</script>
-   	
-		<?php $my_accordion_query = new WP_Query(array(
+		<?php 	    	// Get any existing copy of our transient data
+	    	if ( false === ( $my_accordion_query = get_transient( 'ksas_accordion_query' ) ) ) {
+        	// It wasn't there, so regenerate the data and save the transient
+        	$my_accordion_query = new WP_Query(array(
 			'post_type' => 'accordion',
-			'posts_per_page' => '4')); ?>
+			'posts_per_page' => '4'));
+        	set_transient( 'ksas_accordion_query', $my_accordion_query, 86400 );
+	    	}  ?>
 		
 		<?php if ($my_accordion_query->have_posts()) : ?>				
 				<div id="accordion_background">
@@ -34,8 +32,8 @@
     </div> <!-- accordion-container -->
 	</div> <!-- accordion-container-wrapper --> 
 	</div> <!-- accordion background -->
-	<?php endif; ?>	    
-	    
+	<?php endif; ?>	 
+	
 	    <div id="container-mid">
 	    	<div id="homepage">
 					<?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?> <!--Start the loop -->
@@ -43,6 +41,36 @@
 					<?php endwhile; else: ?>
 						<p><?php _e('Sorry, no posts matched your criteria.'); ?></p>
 					<?php endif; ?>
+					
+					
+					<?php //limit posts to 3 and start the loop
+        					$recentPosts = new WP_Query();
+        					$recentPosts->query('showposts=6');
+	    					while ($recentPosts->have_posts()) : $recentPosts->the_post(); ?> 
+	    				
+	    			<div class="snippet">
+	    			    
+	    			    <h3><a href="<?php the_permalink() ?>" rel="bookmark" title="<?php the_title(); ?>"><?php the_title(); ?></a></h3>
+	    			    
+	    			    <?php if ( has_post_thumbnail()) { ?> 
+	    			    	<div class="thumbnail">
+	    			    		<a href="<?php the_permalink() ?>" rel="bookmark" title="<?php the_title(); ?>">
+	    			    		<img src="<?php $image_id = get_post_thumbnail_id();
+	    			    						$image_url = wp_get_attachment_image_src($image_id,'thumbnail', true);
+	    			    						echo $image_url[0];  ?>" align="left" height="75" /></a>
+	    			    	</div> <!--end thumbnail-->
+	    			    <?php	} ?>
+	    			    
+	    			    <a href="<?php the_permalink() ?>" rel="bookmark" title="<?php the_title(); ?>"><?php the_excerpt() ?></a>
+	    			
+	    			</div><!--End snippet -->
+	    				
+	    			<?php endwhile; //End loop ?>
+	    				
+	    			<div class="morenews"><p><a href="<?php bloginfo('url'); ?>/about/news-archive/">More News and Announcements &gt;&gt;</a></div>
+	    		
+	    		</div> <!--End blogfeed -->	
+
 	    		<div class="clearboth"></div> <!--to have background work properly -->
 	    	</div> <!--End homepage -->
 	    		

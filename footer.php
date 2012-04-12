@@ -26,11 +26,7 @@
 		<script src="<?php bloginfo('template_url'); ?>/assets/js/respond.min.js"></script>
 		<script src="<?php bloginfo('template_url'); ?>/assets/js/ksascenters_custom.js"></script>
 		<?php if (is_front_page()) { ?>
-			<script src="<?php bloginfo('template_url'); ?>/assets/js/jquery_easing.js"></script>		
-			<script src="<?php bloginfo('template_url'); ?>/assets/js/responsive_accordion.js"></script>
-		<?php } ?>
-		<?php if (is_page_template('camsconference.php')) { ?>
-			<script src="<?php bloginfo('template_url'); ?>/assets/js/cams.js"></script>
-		<?php } ?>
+			<script src="<?php bloginfo('template_url'); ?>/assets/js/ksas_frontpage.min.js"></script>
+		<?php } ?>	
 </html>
 
