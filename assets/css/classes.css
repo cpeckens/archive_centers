@@ -45,12 +45,20 @@ h3 a {
   height: 0;	
 }
 
-.floatleft {
+.clearleft {
+	clear:left;
+}
+
+.clearright {
+	clear:right;
+}
+
+.floatleft, .alignleft {
 	float:left;
 	margin-right:15px;
 }
 
-.floatright {
+.floatright, .alignright {
 	float:right;
 	margin-left: 15px;
 }

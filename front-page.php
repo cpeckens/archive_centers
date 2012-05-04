@@ -38,15 +38,15 @@
 	    	<div id="homepage">
 					<?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?> <!--Start the loop -->
 						<?php the_content() ?>
-					<?php endwhile; else: ?>
-						<p><?php _e('Sorry, no posts matched your criteria.'); ?></p>
-					<?php endif; ?>
+					<?php endwhile; endif; ?>
 					
 					
 					<?php //limit posts to 3 and start the loop
         					$recentPosts = new WP_Query();
         					$recentPosts->query('showposts=6');
-	    					while ($recentPosts->have_posts()) : $recentPosts->the_post(); ?> 
+	    					if ($recentPosts->have_posts() ) : ?> 
+	    					<h2 class="clearleft">News and Announcements</h2>
+	    					<?php while ($recentPosts->have_posts()) : $recentPosts->the_post(); ?> 
 	    				
 	    			<div class="snippet">
 	    			    
@@ -61,14 +61,13 @@
 	    			    	</div> <!--end thumbnail-->
 	    			    <?php	} ?>
 	    			    
-	    			    <a href="<?php the_permalink() ?>" rel="bookmark" title="<?php the_title(); ?>"><?php the_excerpt() ?></a>
+	    			    <?php the_excerpt() ?>
 	    			
 	    			</div><!--End snippet -->
-	    				
+	    			
 	    			<?php endwhile; //End loop ?>
-	    				
-	    			<div class="morenews"><p><a href="<?php bloginfo('url'); ?>/about/news-archive/">More News and Announcements &gt;&gt;</a></div>
-	    		
+	    		<div class="morenews"><p><a href="<?php echo get_permalink( get_option( 'page_for_posts' ) ); ?>">More News and Announcements &gt;&gt;</a></div>
+	    		<? endif; ?>
 	    		</div> <!--End blogfeed -->	
 
 	    		<div class="clearboth"></div> <!--to have background work properly -->

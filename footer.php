@@ -8,6 +8,7 @@
 					    <li class="youtube"><span>YouTube</span</li>
 					    <li class="rss"><span>RSS</span></li>
 					</ul>
+					<p><a><strong>Quick Links:</strong></a> <a href="http://my.johnshopkins.edu" target="_blank">My Johns Hopkins</a> | <a href="http://jhem.johnshopkins.edu" target="_blank">JHEM</a></p>
 					<p><a href="http://www.jhu.edu">Johns Hopkins University</a> | <a href="http://krieger.jhu.edu">Zanvyl Krieger School of Arts and Sciences</a></p>
 					<small>&copy; Johns Hopkins University. All rights reserved.</small>
 				</div><!--End footer-left -->
@@ -23,10 +24,6 @@
 		</div> <!--End container-foot -->
 		<?php wp_footer(); ?>
 	</body>
-		<script src="<?php bloginfo('template_url'); ?>/assets/js/respond.min.js"></script>
-		<script src="<?php bloginfo('template_url'); ?>/assets/js/ksascenters_custom.js"></script>
-		<?php if (is_front_page()) { ?>
-			<script src="<?php bloginfo('template_url'); ?>/assets/js/ksas_frontpage.min.js"></script>
-		<?php } ?>	
+		<script src="<?php network_home_url(); ?>/min/?f=wp-content/themes/centers/assets/js/respond.min.js,wp-content/themes/centers/assets/js/ksas_custom.js<?php if (is_front_page()) { ?>,wp-content/themes/centers/assets/js/ksas_frontpage.js<?php } ?>&1"></script>
 </html>
 

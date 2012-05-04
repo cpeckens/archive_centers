@@ -8,17 +8,11 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		
 		<!-- CSS -->
-		<link rel="stylesheet" href="<?php bloginfo('template_url'); ?>/style.css" />
+		<link rel="stylesheet" href="<?php network_home_url(); ?>/min/?f=wp-content/themes/centers/assets/css/main.css,wp-content/themes/centers/assets/css/classes.css,wp-content/themes/centers/assets/css/media.css<?php if (is_front_page()) { ?>,wp-content/themes/centers/assets/css/slider_accordion.css<?php } ?>&3" />
 		<!--[if lte IE 8]>
 		<link rel="stylesheet" href="<?php bloginfo('template_url'); ?>/assets/css/ie.css" />
 		<![endif]-->
-		<?php if (is_front_page()) { ?>
-			<link rel="stylesheet" href="<?php bloginfo('template_url'); ?>/assets/css/slider_accordion.css" />
-		<?php } ?>
-		<?php if (is_page_template('camsconference.php')) { ?>
-			<link rel="stylesheet" href="<?php bloginfo('template_url'); ?>/assets/css/cams.css" />
-		<?php } ?>
-		
+				
 		<!--Wordpress Neccessities -->
 		<?php wp_enqueue_script('jquery'); ?> 
 		<?php wp_head(); ?>
