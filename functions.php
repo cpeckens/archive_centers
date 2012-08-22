@@ -108,6 +108,24 @@
 	}
 	add_filter('excerpt_length', 'ksascenters_new_excerpt_length');
 	
+/********************DELETE TRANSIENTS ON UPDATES**********************/
+function delete_people_transients() {
+	if($_POST[post_type] == 'people') {
+		delete_transient('ksas_emeriti_query');
+		delete_transient('ksas_faculty_query');
+		delete_transient('ksas_staff_query');
+	}
+}
+add_action('save_post','delete_people_transients');
+
+function delete_accordion_transients() {
+	if($_POST[post_type] == 'accordion') {
+		delete_transient('ksas_accordion_query');
+	}
+}
+add_action('save_post','delete_accordion_transients');
+
+	
 /********************Includes to Additional Functions**********************/	
 // include custom widget functionality, posttypes, taxonomies, and metaboxes
 // uncomment the the lines below if using on a single install.  These are now plugins on the network install.

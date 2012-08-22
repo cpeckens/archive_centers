@@ -477,7 +477,7 @@ ___________________________________________________________*/
 #searchresults {
 	width:100%;
 	max-width: 960px;
-	background: #e2e1df;
+	background: #f7f7f7;
 	margin: 40px auto;
 	display: block;
 }
@@ -574,3 +574,40 @@ h3.expand {
 
 .wysiwyg-more-less-toggle,
 .acc_container {display:none;}
+
+/* 9.0 People Single Display and Tabs
+___________________________________________________________*/
+.people-info {
+	float: left;
+	width: 30%
+}
+
+.people-info img {
+	max-width:80%;
+}
+
+.people-info h2 {
+	margin-bottom: 0;
+}
+
+.people-info .label {
+	font-weight: 700;
+}
+
+.people-tabs {
+	float:right;
+	width: 69%;
+	border-left: #ddd solid 1px;
+}
+
+.people-tabs h4 {
+	font-weight: 700;
+}
+
+.people-tabs li {
+	padding-left:2%;
+}
+
+ul.tabs-content li {
+	padding-left: 10px;
+}
